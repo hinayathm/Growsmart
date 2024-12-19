@@ -1,0 +1,193 @@
+{% load static %}
+
+<html>
+    <head>
+        <title>Home Grow Smart</title>
+        <link rel="stylesheet" href="{% static 'css/Home.css' %}">
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+            .background-div {
+                width: 100%;
+                height: 500px;
+                background-image: url("{% static 'image/bg1.jpg' %}");
+                background-size: cover;
+                background-position: center;
+            }
+
+            #div2 {
+                background-color: #F5EFE6;
+                width: 100%;
+                height: 450px;
+                overflow-x: auto;
+                white-space: nowrap;
+                border: 1px solid #ccc;
+                padding: 20px 0;
+                position: relative;
+            }
+
+            #div3 {
+                background-color: #4B5945;
+                width: 100%;
+                height: 400px;
+            }
+
+            .box {
+                background-color: #B2C9AD;
+                height: 250px;
+                width: 250px;
+                border-radius: 5%;
+                margin: 0 15px;
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                flex-direction: column;
+            }
+
+            #main {
+                display: inline-flex;
+                justify-content: flex-start;
+                padding-left: 20px;
+                gap: 15px;
+            }
+
+            .text {
+                display: flex;
+                justify-content: center;
+                margin-bottom: 20px;
+            }
+
+            .boxs {
+                background-color: #B2C9AD;
+                height: 250px;
+                width: 250px;
+                border-radius: 5%;
+                margin-top: 70px;
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                justify-content: center;
+                box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+            }
+
+            .mainbox {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+            }
+
+            #heading {
+                color: #fff;
+                font-size: 50px;
+                text-align: center;
+            }
+
+            #pp {
+                color: #fff;
+                text-align: center;
+            }
+
+            .icon {
+                height: 100px;
+                width: 100px;
+                margin-bottom: 30px;
+            }
+
+            .icon:hover {
+                opacity: 0.5;
+            }
+
+            #div2 {
+                overflow-x: scroll;
+                scrollbar-width: none;
+            }
+
+            #div2::-webkit-scrollbar {
+                display: none;
+            }
+
+            #head2 {
+                position: sticky;
+                top: 0;
+                background-color: #F5EFE6;
+                z-index: 10;
+                text-align: center;
+                font-size: 2rem;
+                margin-bottom: 20px;
+                padding: 10px 0;
+            }
+
+            #div8 {
+                position: sticky;
+                top: 0;
+                background-color: #F5EFE6;
+                z-index: 10;
+                text-align: center;
+                font-size: 2rem;
+                margin-bottom: 20px;
+                padding: 10px 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="background-div">
+            <h1 id="heading">Grow Smart</h1>
+            <h2 id="pp">Empowering Growth Through Innovation and Intelligence</h2>
+        </div>
+        <div id="div2">
+            <div id="div8">
+                <h1 id="head2">PRODUCTS</h1>
+            </div>
+            <div id="main">
+                {% for i in hina %}
+                <div class="box">
+                    <img src="{{ i.Image.url }}" alt="Product Image" height="180px" width="180px">
+                    <h3>{{ i.Product_name }}</h3>
+                </div>
+                {% empty %}
+                <p>No products available.</p>
+                {% endfor %}
+                <div class="box">
+                    <a href="/Prod_view">
+                  <img src="{% static 'image/more.png' %}" alt="" height="100px " width="100px">
+                  <h3>View More</h3>
+                  </a>
+                </div>
+
+            </div>
+        </div>
+        <div id="div3">
+            <div class="mainbox">
+                <div class="boxs">
+                    <h1>Complaints</h1>
+                    <a href="/complaints">
+                        <img src="{% static 'image/com.png' %}" alt="Complaints Icon" class="icon">
+                    </a>
+                </div>
+                <div class="boxs">
+                    <h1>Feedback</h1>
+                    <a href="/feedback">
+                        <img src="{% static 'image/fb.png' %}" alt="Feedback Icon" class="icon">
+                    </a>
+                </div>
+                <div class="boxs">
+                    <h1>Add Product</h1>
+                    <a href="/manageusers">
+                        <img src="{% static 'image/add.png' %}" alt="Users Icon" class="icon">
+                    </a>
+                </div>
+                <div class="boxs">
+                    <h1>Manage Users</h1>
+                    <a href="/manageusers">
+                        <img src="{% static 'image/us.png' %}" alt="Users Icon" class="icon">
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </body>
+</html>

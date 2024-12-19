@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grow Smart - Admin Complaints</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        /* body {
+            font-family: Arial, sans-serif;
+            background-color: #F5EFE6;
+        } */
+        header {
+            background-color: #ff5722;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            top: 120px;
+            right: 10px;
+            bottom: 100px;
+            left: 10px;
+
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background-color: white;
+        }
+        th, td {
+            padding: 0.8rem;
+            text-align: left;
+            border: 1px solid #ccc;
+        }
+        th {
+            background-color: #4B5945;
+            color: white;
+        }
+        td.actions {
+            text-align: center;
+            vertical-align: middle;
+        }
+        button {
+            background-color: #98BF64;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            color: white;
+        }
+        button:hover {
+            background-color: #7DA854;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #777;
+        }
+        /* Modal styling */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            text-align: center;
+        }
+        .modal-content textarea {
+            width: 100%;
+            height: 100px;
+            padding: 0.8rem;
+            margin: 1rem 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .modal-content button {
+            margin: 0.5rem;
+        }
+        .div1{
+            background-color: #B2C9AD;
+            height: 300px;
+            width: 100%;
+            
+
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="div1">
+    <!-- <h1>GROW SMART COMPLAINTS - ADMIN PANEL</h1> -->
+</div>
+
+<div class="container">
+    <h1>Complaints Overview</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Complaint</th>
+                <th>Date Submitted</th>
+                <th> Reply</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in val %}
+            <tr>
+                <td>{{ i.LOGIN_ID.username }}</td>
+                <td>{{ i.Complaints }}</td>
+                <td>{{ i.created_at }}</td>
+                <td>{{i.Reply}}</td>
+                <td class="actions">
+                    <button class="reply-btn" data-id="{{ i.id }}" onclick="openDeleteModal('{{i.id}}')">Reply</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="footer">
+    <p>&copy; 2024 Grow Smart. All rights reserved.</p>
+</div>
+
+<!-- Modal for reply -->
+ <form method="post" action="/Replycomplaint">
+    {% csrf_token %}
+<div class="modal" id="replyModal">
+    <div class="modal-content">
+        <h2>Reply to Complaint</h2>
+        <input type="text" id="complaintId" name="complaintId">
+        <textarea id="replyMessage" placeholder="Enter your reply here..." name="Reply"></textarea>
+        <button type="submit" id="Reply" >Send Reply</button>
+        <button  type="button" id="closeModal">Cancel</button>
+    </div>
+</div>
+</form>
+
+<script>
+    // JavaScript to handle the modal
+    const replyButtons = document.querySelectorAll('.reply-btn');
+    const modal = document.getElementById('replyModal');
+    const closeModal = document.getElementById('closeModal');
+    const sendReply = document.getElementById('sendReply');
+    const replyMessage = document.getElementById('replyMessage');
+    const complaintIdInput = document.getElementById('complaintId'); 
+    let currentComplaintId = null;
+
+    // Open modal
+    replyButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            currentComplaintId = event.target.getAttribute('data-id');
+            complaintIdInput.value = currentComplaintId; 
+            modal.style.display = 'flex';
+        });
+    });
+
+    // Close modal
+    closeModal.addEventListener('click', () => {
+        modal.style.display = 'none';
+        replyMessage.value = ''; // Clear the textarea
+    });
+
+    // Send reply
+    sendReply.addEventListener('click', () => {
+        const replyText = replyMessage.value.trim();
+        if (replyText) {
+            alert(`Reply sent for complaint ID: ${currentComplaintId}\nMessage: ${replyText}`);
+            modal.style.display = 'none';
+            replyMessage.value = ''; // Clear the textarea
+        } else {
+            alert('Please enter a reply message.');
+        }
+    });
+
+    // Close modal when clicking outside the modal content
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+            replyMessage.value = ''; // Clear the textarea
+        }
+    });
+</script>
+
+</body>
+</html>

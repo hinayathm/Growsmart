@@ -1,0 +1,27 @@
+{% load static %}
+
+
+<html lang="en">
+<head>
+    
+    <title>Login Page</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="login-container">
+        <img src="logo.jpeg">
+        <form method="post">
+            {% csrf_token %}
+            <div class="input-group">
+                
+                <input id="Username" placeholder="Username" name="username">
+            </div>
+            <div class="input-group">
+                <input id="password" type="password" placeholder="Password" name="password">
+            </div>
+            <button type="submit">Login</button>
+            <p class="signup-link">Don't have an account? <a href="#">Sign up</a></p>
+        </form>
+    </div>
+</body>
+</html>
