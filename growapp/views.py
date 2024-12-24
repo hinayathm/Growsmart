@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 
 from growapp.models import Complaints_model, Login_model, User_model
@@ -85,3 +85,13 @@ class Addproducts(View):
         if c.is_valid():
             c.save()
             return HttpResponse('''<script> alert('product add sucessfully');window.location='/Prod_view' </script>''')
+       
+    
+    
+class Deleteproduct(View):
+    def get(self,request,pk):
+        obj=Product_model.objects.get(pk=pk)
+        obj.delete()
+        return HttpResponse('''<script> alert('product deleted sucessfully');window.location='/Prod_view' </script>''')
+       
+ 

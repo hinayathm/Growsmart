@@ -19,7 +19,7 @@ class Feature_model(models.Model):
     Moisture=models.CharField(max_length=100,null=True,blank=True)
 
 class Feedback_model(models.Model):
-     USER_ID=models.ForeignKey(Login_model,on_delete=models.CASCADE,null=True,blank=True)
+     USER_ID=models.ForeignKey(User_model,on_delete=models.CASCADE,null=True,blank=True)
      created_at = models.DateField(auto_now_add=True)
      Review=models.CharField(max_length=100,null=True,blank=True)
      Feedback=models.CharField(max_length=100,null=True,blank=True)

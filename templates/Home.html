@@ -4,6 +4,7 @@
     <head>
         <title>Home Grow Smart</title>
         <link rel="stylesheet" href="{% static 'css/Home.css' %}">
+        <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
         <style>
             body {
                 margin: 0;
@@ -36,7 +37,8 @@
             }
 
             .box {
-                background-color: #B2C9AD;
+                background-color: #ffffff;
+                border: 3px solid #B2C9AD;
                 height: 250px;
                 width: 250px;
                 border-radius: 5%;
@@ -92,8 +94,8 @@
             }
 
             .icon {
-                height: 100px;
-                width: 100px;
+                height: 70px;
+                width: 70px;
                 margin-bottom: 30px;
             }
 
@@ -143,14 +145,18 @@
                 <h1 id="head2">PRODUCTS</h1>
             </div>
             <div id="main">
+                <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+
                 {% for i in hina %}
                 <div class="box">
-                    <img src="{{ i.Image.url }}" alt="Product Image" height="180px" width="180px">
+                    <img src="{{ i.Image.url }}" alt="Product Image" height="150px" width="150px">
                     <h3>{{ i.Product_name }}</h3>
                 </div>
                 {% empty %}
                 <p>No products available.</p>
+           
                 {% endfor %}
+            </div>
                 <div class="box">
                     <a href="/Prod_view">
                   <img src="{% static 'image/more.png' %}" alt="" height="100px " width="100px">
@@ -176,7 +182,7 @@
                 </div>
                 <div class="boxs">
                     <h1>Add Product</h1>
-                    <a href="/manageusers">
+                    <a href="/Addproducts">
                         <img src="{% static 'image/add.png' %}" alt="Users Icon" class="icon">
                     </a>
                 </div>

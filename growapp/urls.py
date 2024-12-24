@@ -13,4 +13,6 @@ urlpatterns = [
     path('Replycomplaint',Replycomplaint.as_view(),name='Replycomplaint'),
     path('Prod_view',Prod_view.as_view(),name='Prod_view'),
     path('Addproducts',Addproducts.as_view(),name='addproducts'),
+    path('deteleproduct/<int:pk>/',Deleteproduct.as_view(),name='Deleteproduct'),
 ]
+
