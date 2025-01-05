@@ -41,5 +41,12 @@ class Complaints_model(models.Model):
      updated_at = models.DateField(auto_now=True)
      Reply=models.CharField(max_length=100,null=True,blank=True)
 
+class manageseeds_model(models.Model):
+     Seed_name=models.CharField(max_length=100,null=True,blank=True)
+     seed_image=models.FileField(upload_to='seeds/',null=True,blank=True)
+     Tempurature=models.CharField(max_length=100,null=True,blank=True)
+     Humidity=models.CharField(max_length=100,null=True,blank=True)
+     Moisture=models.CharField(max_length=100,null=True,blank=True)
+
 
      

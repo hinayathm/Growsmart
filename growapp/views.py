@@ -49,7 +49,7 @@ class Manageuser(View):
 class Prod_view(View):
     def get(self,request):
         obj=Product_model.objects.all()
-        return render(request,'Prod_view.html', { 'hina':obj })    
+        return render(request,'prod_view.html', { 'hina':obj })    
     
 class Deleteuser(View):
     def get(self,request,pk):
@@ -94,4 +94,30 @@ class Deleteproduct(View):
         obj.delete()
         return HttpResponse('''<script> alert('product deleted sucessfully');window.location='/Prod_view' </script>''')
        
- 
+class Manageseeds(View):
+    def get(self,request):
+        obj=manageseeds_model.objects.all()
+        return render(request,'manageseeds.html', { 'hina':obj })
+    def post(self,request):
+        obj=manageseeds_model.objects.get(pk=request.POST['seedid'])
+        c=Addseed_form(request.POST, instance=obj)
+        if c.is_valid():
+            c.save()
+            return HttpResponse('''<script> alert('product add sucessfully');window.location='/manageseeds' </script>''')
+
+class Addseed(View):
+    def get(self,request):
+        return render(request,'addseed.html')
+    def post(self,request):
+        c=Addseed_form(request.POST, request.FILES)
+        if c.is_valid():
+            c.save()
+            return HttpResponse('''<script> alert('product add sucessfully');window.location='/manageseeds' </script>''')
+       
+class Deleteseed(View):
+    def get(self,request,pk):
+        obj=manageseeds_model.objects.get(pk=pk)
+        obj.delete()
+        return HttpResponse('''<script> alert('product deleted sucessfully');window.location='/manageseeds' </script>''')
+    
+    

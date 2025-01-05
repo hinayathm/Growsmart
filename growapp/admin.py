@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Complaints_model, Feature_model, Feedback_model, Login_model, Product_model, User_model
+from .models import Complaints_model, Feature_model, Feedback_model, Login_model, Product_model, User_model, manageseeds_model
 
 # Register your models here.
 
@@ -10,3 +10,4 @@ admin.site.register(Feedback_model)
 admin.site.register(Feature_model)
 admin.site.register(Product_model)
 admin.site.register(Complaints_model)
+admin.site.register(manageseeds_model)

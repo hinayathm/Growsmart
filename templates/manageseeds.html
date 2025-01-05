@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grow Smart - Admin Manage Users</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        *{
+            margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+ body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+}
+header{
+    background-color: #2196F3;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+/* General container styling */
+.container {
+    max-width: 800px;
+    margin: 2rem auto;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 120px;
+    right: 10px;
+    bottom: 100px;
+    left: 10px;
+    overflow: hidden;
+    height: 70vh;
+}
+
+/* Header styling */
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+/* Table container to add scrolling */
+.table-container {
+   width: 100%;
+   max-height: 800px; 
+    overflow-y: auto; /* Enable vertical scrolling */
+       /* Hide scrollbar for all browsers */
+       -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none; /* Firefox */
+}
+
+/* Hide scrollbar for WebKit browsers (Chrome, Safari, etc.) */
+.table-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* Table styling */
+table {
+    border-collapse: collapse;
+    margin: 0; /* Remove margin */
+    table-layout: fixed; /* Ensures consistent column widths */
+}
+
+/* Table header styling */
+th {
+    padding: 0.8rem;
+    text-align: left;
+    border: 1px solid #ccc;
+    background-color: #4B5945;
+    color: white;
+    position: sticky; 
+    top: 0;
+    z-index: 1; 
+}
+
+
+td {
+    padding: 0.8rem;
+    text-align: left;
+    border: 1px solid #ccc;
+    word-wrap: break-word; 
+}
+
+
+td img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+
+.actions button {
+    margin: 0 5px;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.edit {
+    background-color: #4CAF50;
+    color: white;
+}
+.delete {
+    background-color: #f44336;
+    color: white;
+}
+.add-user {
+    background-color: #ff9800;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+.add-user:hover {
+    background-color: #e68a00;
+}
+.footer {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: #777;
+}
+
+/* Modal styling */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5); /* Overlay effect */
+}
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 1.5rem;
+    border-radius: 8px;
+    width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+.modal-content h2 {
+    margin-bottom: 1rem;
+}
+.modal-content button {
+    padding: 0.8rem 1.5rem;
+    margin: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.confirm {
+    background-color: #4CAF50;
+    color: white;
+}
+.cancel {
+    background-color: #f44336;
+    color: white;
+}
+.div1{
+    background-color: #B2C9AD;
+    height: 300px;
+    width: 100%;
+}
+.button-style {
+display: inline-block;
+text-align: center;
+padding: 0.8rem 1.5rem;
+margin: 0.5rem;
+background-color: #4CAF50;
+color: white;
+border: none;
+border-radius: 4px;
+text-decoration: none;
+cursor: pointer;
+}
+
+.button-style:hover {
+background-color: #45a049;
+}
+
+</style>
+</head>
+<body>
+
+<div class="div1">
+</div>
+
+<div class="container">
+<h1>Manage Seeds</h1>
+<a class="add-user" href="/addseed"> Add seeds</a>
+<div class="table-container">
+<table>
+<thead>
+    <tr>
+        <th>seed name</th>
+        <th>seed image</th>
+        <th>temperature</th>
+        <th>humudity</th>
+        <th>moisture</th>
+        <th>actions</th>
+    </tr>
+</thead>
+<tbody>
+    {% for i in hina %}
+    <tr>
+        <td>{{ i.Seed_name}}</td>
+        <td><img src="{{i.seed_image.url}}"height="50px" width="50px" alt=""></td>
+        <td>{{ i.Tempurature }}</td>
+        <td>{{ i.Humidity }}</td>
+        <td>{{ i.Moisture}}</td>
+       
+        <td class="actions">
+            <button class="edit" onclick="openEditModal('{{ i.Seed_name }}', '{{ i.Tempurature }}', '{{ i.Humidity }}','{{i.Moisture}}','{{i.id}}')">Edit</button>
+            <button class="delete" onclick="openDeleteModal('{{ i.Seed_name }}', '{{ i.id }}')">Delete</button>
+        </td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- Delete Modal -->
+<div id="deleteModal" class="modal">
+<div class="modal-content">
+<h2>Are you sure you want to delete <span id="deleteUserName"></span>?</h2>
+<a class="confirm button-style" id="deleteLink" href="#">Yes</a>
+<button class="cancel" onclick="closeModal('deleteModal')">No</button>
+</div>
+</div>
+
+<!-- Edit Modal -->
+<div id="editModal" class="modal">
+<div class="modal-content">
+<h2>Edit User Details</h2>  
+<form id="editForm" method="post">
+    {%csrf_token%}
+    <input type="text" name="seedid" id="seedid">
+    <input type="text" name="Seed_name" id="Seed_name" placeholder="Name" required><br><br>
+    <input type="text" name="Tempurature" id="Tempurature" placeholder="Temperature" required><br><br>
+    <input type="text" name="Humidity"id="Humidity" placeholder="Humidity" required><br><br>
+    <input type="text" name="Moisture"  id="Moisture" placeholder="moisture" required><br><br>
+
+    <button class="confirm" type="submit">Save</button>
+    <button class="cancel" type="button" onclick="closeModal('editModal')">Cancel</button>
+</form>
+</div>
+</div>
+
+<div class="footer">
+<p>&copy; 2024 Grow Smart. All rights reserved.</p>
+</div>
+<script>
+    function openDeleteModal(userName, id) {
+        console.log('Deleting seed with ID:', id);  // Debugging line
+        if (id) {
+            document.getElementById('deleteUserName').innerText = userName;
+            // Fixed string interpolation for href
+            document.getElementById('deleteLink').href = `/deleteseed/${id}/`;
+            document.getElementById('deleteModal').style.display = 'block';
+        } else {
+            console.error("ID is undefined or invalid");
+        }
+    }
+    
+    // Function to open the Edit Modal
+    function openEditModal(Seed_name, Tempurature , Humidity, Moisture, id) {
+        console.log("id")
+        document.getElementById('seedid').value = id;
+        document.getElementById('Seed_name').value = Seed_name;
+        document.getElementById('Tempurature').value = Tempurature;
+        document.getElementById('Humidity').value = Humidity;
+        document.getElementById('Moisture').value = Moisture;
+        document.getElementById('editModal').style.display = 'block';
+    }
+    
+    // Function to close Modals
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = 'none';
+    }
+    
+    // Close modals on outside click
+    window.onclick = function(event) {
+        const deleteModal = document.getElementById('deleteModal');
+        const editModal = document.getElementById('editModal');
+        if (event.target === deleteModal) closeModal('deleteModal');
+        if (event.target === editModal) closeModal('editModal');
+    };
+    </script>
+</body>
+</html> 

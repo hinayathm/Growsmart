@@ -14,5 +14,9 @@ urlpatterns = [
     path('Prod_view',Prod_view.as_view(),name='Prod_view'),
     path('Addproducts',Addproducts.as_view(),name='addproducts'),
     path('deteleproduct/<int:pk>/',Deleteproduct.as_view(),name='Deleteproduct'),
+    path('manageseeds/',Manageseeds.as_view(),name='manadeseeds'),
+    path('addseed/',Addseed.as_view(),name='addseed'),
+    path('deleteseed/<int:pk>/',Deleteseed.as_view(),name='Deleteseed'),
+
 ]
 
